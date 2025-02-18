@@ -22,6 +22,6 @@ class SubscribersRepository:
                 db.session
                 .query(Inscritos)
                 .filter(Inscritos.email == email, Inscritos.evento_id == evento_id)
-                .one_or_none()                
+                .one_or_none()               
             )
             return data
