@@ -1,12 +1,12 @@
 from src.model.configs.base import Base
-from sqlalchemy import Column, String, Integer, foreigmn_key
+from sqlalchemy import Column, String, Integer, ForeignKey
 
 class Inscritos(Base):
-    __tablename__ = "inscritos"
+    __tablename__ = "Inscritos"
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
     email = Column(String, nullable=False)
     link = Column(String, nullable=True)
-    evento_id = Column(Integer, foreign_key="eventos.id")
+    evento_id = Column(Integer, ForeignKey("eventos.id"))
     
