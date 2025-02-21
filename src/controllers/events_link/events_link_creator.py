@@ -1,9 +1,9 @@
 from src.http_types.http_request import HttpRequest
 from src.http_types.http_response import HttpResponse
-from src.model.repositories.interfaces.eventos_repository import EventosRepositoryInterface
+from src.model.repositories.interfaces.eventos_link_repository import EventosLinkRepositoryInterface
 
 class EventsLinkCreator:
-    def __init__(self, events_link_repo: EventosRepositoryInterface):
+    def __init__(self, events_link_repo: EventosLinkRepositoryInterface):
         self.__events_link_repo = events_link_repo
 
     def create(self, http_request: HttpRequest) -> HttpResponse:

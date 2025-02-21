@@ -1,7 +1,7 @@
 from src.http_types.http_request import HttpRequest
 from src.http_types.http_response import HttpResponse
 from src.model.repositories.interfaces.subscribers_repository import SubscribersRepositoryInterface
-class subscriber_manager:
+class SubscriberManager:
     def __init__(self, subscribers_repo: SubscribersRepositoryInterface):
         self.__subscribers_repo = subscribers_repo
         
@@ -9,6 +9,7 @@ class subscriber_manager:
         link = http_request.param["link"]      
         event_id = http_request.param["event_id"]
         subs = self.__subscribers_repo.select_subscribers_by_id_link(link, event_id)
+        return self.__format_subs_by_link(subs)
         
     def get_event_ranking(self, http_request: HttpRequest) -> HttpResponse:
         event_id = http_request.param["event_id"]
@@ -20,7 +21,7 @@ class subscriber_manager:
         for sub in subs:
             formatted_subscriber.append(
                 {
-                    "nome": sub.nome,
+                    "nome": sub.name,
                     "email": sub.email,
                 }
             )
@@ -31,10 +32,11 @@ class subscriber_manager:
                     "count": len(formatted_subscriber),
                     "subscribers": formatted_subscriber
                 }
-            }
-         )
+            },
+            status_code=200
+        )
         
-    def __format_event_ranking(self, ebent_ranking: list) -> HttpResponse:
+    def __format_event_ranking(self, event_ranking: list) -> HttpResponse:
         formatted_event_ranking = []
         for position in event_ranking:
             formatted_subscriber.append(
@@ -46,9 +48,10 @@ class subscriber_manager:
         return HttpResponse(
             body={
                 "data": {
-                    "Type": "Subscriber",
+                    "Type": "Ranking",
                     "count": len(formatted_event_ranking),
                     "ranking": formatted_event_ranking
-                }
-            }
-         )
+                    }
+                },
+            status_code=200
+            )
